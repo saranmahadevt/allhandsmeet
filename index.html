@@ -1,11 +1,938 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Hands Meet</title>
+  <meta charset="utf-8" />
+  <title>All-Hands 2025 Posters — Day 1 & Day 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      --ink: #0f172a;
+      --muted: #334155;
+      --ink-on-dark: #ecfeff;  /* Day themes (screen) */
+  --day1-a: #6236FF;
+  --day1-b: #14B8A6;
+  --day2-a: #FF7A59;
+  --day2-b: #5B9CF6;
+
+  --card: rgba(255,255,255,0.94);
+  --shadow: 0 10px 30px rgba(0,0,0,0.15);
+  --label: #0b1220;
+  --label-dim: #475569;
+  --chip-bg: #eef2ff;
+  --chip-border: rgba(17,24,39,0.08);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font);
+  background: #f3f4f6;
+  overflow-x: hidden;
+}
+
+/* Particles canvas */
+#particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.wrap {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* Poster base */
+.poster {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  color: var(--ink-on-dark);
+  box-shadow: var(--shadow);
+  margin: 24px auto;
+}
+
+.poster-inner {
+  position: relative;
+  padding: 28px;
+  min-height: 920px;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 20px;
+}
+
+/* Decorative gradients (screen) */
+.poster::before,
+.poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.poster::before { opacity: 0.95; }
+.poster::after {
+  background:
+    radial-gradient(1200px 400px at -10% -20%, rgba(255,255,255,0.20), transparent 60%),
+    radial-gradient(500px 700px at 120% 10%, rgba(255,255,255,0.12), transparent 70%),
+    radial-gradient(700px 400px at 30% 120%, rgba(255,255,255,0.10), transparent 60%);
+  mix-blend-mode: screen;
+}
+
+.poster.day1::before {
+  background: linear-gradient(135deg, var(--day1-a), var(--day1-b));
+}
+.poster.day2::before {
+  background: linear-gradient(135deg, var(--day2-a), var(--day2-b));
+}
+
+/* Header */
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 16px;
+  align-items: start;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo {
+  width: 56px; height: 56px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.22);
+  backdrop-filter: blur(2px);
+  display: grid; place-items: center;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--ink-on-dark);
+}
+.titles h1 {
+  margin: 0;
+  font-size: 36px;
+  line-height: 1.1;
+  letter-spacing: 0.3px;
+  color: var(--ink-on-dark);
+}
+.titles p {
+  margin: 4px 0 0;
+  opacity: 0.9;
+  font-size: 14px;
+  color: var(--ink-on-dark);
+}
+.when-where {
+  text-align: right;
+  font-size: 14px;
+  opacity: 0.95;
+  color: var(--ink-on-dark);
+}
+.tagline {
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  width: fit-content;
+  border-radius: 999px;
+  font-weight: 600;
+  letter-spacing: 0.25px;
+  color: var(--ink-on-dark);
+}
+
+/* Highlights */
+.highlights {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.highlight-card {
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 14px;
+  padding: 14px;
+  color: var(--ink-on-dark);
+}
+.highlight-title {
+  font-weight: 700;
+  margin: 0 0 6px;
+  font-size: 16px;
+}
+.highlight-sub {
+  margin: 0;
+  opacity: 0.95;
+  font-size: 13px;
+}
+
+/* Schedule */
+.schedule {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+.slot, .group {
+  background: var(--card);
+  color: #0b1220;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  border-left: 6px solid rgba(0,0,0,0.2);
+  padding: 12px;
+}
+.slot {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 12px;
+  align-items: start;
+}
+.slot .num {
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  background: #0b1220;
+  color: white;
+  font-weight: 800;
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+.slot .content h3 {
+  margin: 0;
+  font-size: 16px;
+}
+.slot .content p {
+  margin: 4px 0 0;
+  color: #334155;
+  font-size: 13px;
+}
+.slot .meta {
+  text-align: right;
+  font-size: 12px;
+  color: #334155;
+  display: grid;
+  gap: 4px;
+  min-width: 200px;
+}
+
+/* Grouped sessions */
+.group {
+  border-left-color: #0ea5e9;
+  padding: 14px;
+}
+.group-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+.group-title {
+  margin: 0;
+  font-size: 18px;
+  color: #0b1220;
+  font-weight: 800;
+}
+.group-sub {
+  margin: 0;
+  font-size: 12px;
+  color: #475569;
+}
+.subslot {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  gap: 10px;
+  padding: 8px 0;
+  border-top: 1px dashed rgba(15,23,42,0.2);
+  align-items: start;
+}
+.subslot:first-of-type { border-top: 0; }
+.sub-idx {
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  display: grid; place-items: center;
+  background: #0b1220; color: #fff; font-size: 12px; font-weight: 800;
+}
+.sub-main h4 {
+  margin: 0;
+  font-size: 15px;
+  color: #0b1220;
+}
+.sub-main p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #334155;
+}
+.sub-meta {
+  text-align: right;
+  font-size: 12px;
+  color: #334155;
+  display: grid;
+  gap: 2px;
+  min-width: 200px;
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.chip {
+  background: var(--chip-bg);
+  color: #1e293b;
+  border: 1px solid var(--chip-border);
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 4px 10px;
+  white-space: nowrap;
+}
+.label {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--label);
+  font-size: 12px;
+  margin-top: 8px;
+  margin-right: 8px;
+}
+.label.dim { color: var(--label-dim); font-weight: 600; }
+
+.slot.break { border-left-color: #f59e0b; background: #fff7ed; }
+.slot.celebrate { border-left-color: #84cc16; background: #f0fdf4; }
+.slot.awards { border-left-color: #a855f7; background: #faf5ff; }
+
+/* Footer */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+.note {
+  font-size: 12px;
+  opacity: 0.95;
+}
+.legend {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.legend .legend-chip {
+  background: rgba(255,255,255,0.14);
+  border: 1px solid rgba(255,255,255,0.22);
+  border-radius: 999px;
+  font-size: 12px;
+  padding: 6px 10px;
+}
+
+/* Accents */
+.day1 .slot { border-left-color: #3b82f6; }
+.day2 .slot { border-left-color: #06b6d4; }
+
+/* Responsive */
+@media (max-width: 880px) {
+  .highlights { grid-template-columns: 1fr; }
+  .header { grid-template-columns: 1fr; }
+  .when-where { text-align: left; }
+  .slot .meta, .sub-meta { min-width: 0; }
+}
+
+/* Print — optimized */
+@media print {
+  @page { size: A4; margin: 12mm; }
+  html, body {
+    background: #ffffff !important;
+    color: #111111 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  #particles { display: none !important; }
+  .wrap { max-width: none; margin: 0; padding: 0; }
+  .poster {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    break-after: page;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    color: #111 !important;
+  }
+  .poster:last-of-type { break-after: auto; }
+  .poster::before, .poster::after { content: none !important; display: none !important; }
+  .slot, .group, .highlight-card {
+    background: #ffffff !important;
+    color: #111111 !important;
+    box-shadow: none !important;
+    border-left-color: #111111 !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  .slot.break, .slot.celebrate, .slot.awards { background: #ffffff !important; }
+  .day1 .slot, .day2 .slot, .group { border-left-color: #111111 !important; }
+  .slot .num, .sub-idx {
+    background: #111111 !important;
+    color: #ffffff !important;
+  }
+  .titles p, .when-where, .slot .content p, .slot .meta, .sub-main p, .sub-meta, .group-sub, .highlight-sub, .note {
+    color: #333333 !important;
+  }
+  .chip {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border-color: #cccccc !important;
+  }
+  .legend .legend-chip {
+    background: #ffffff !important;
+    color: #111111 !important;
+    border-color: #dddddd !important;
+  }
+  .group, .slot { break-inside: avoid; page-break-inside: avoid; }
+  .poster-inner { padding: 0; min-height: 0; }
+  .tagline, .logo {
+    border: 1px solid #dddddd !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+  }
+}
+  </style>
 </head>
 <body>
-    <h1>All Hands Meet!</h1>
-</body>
+  <canvas id="particles" aria-hidden="true"></canvas>
+  <div class="wrap"><!-- DAY 1 POSTER -->
+<section class="poster day1">
+  <div class="poster-inner">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">IQ</div>
+        <div class="titles">
+          <h1>All-Hands 2025 — Day 1</h1>
+          <p>Theme: Zen Rise • Focus: Company, Zen Rise, AI</p>
+        </div>
+      </div>
+      <div class="when-where">
+        <div><strong>Thu, 16 Oct 2025</strong></div>
+        <div>Venue: Zoho Meeting</div>
+      </div>
+    </header>
+
+    <div class="tagline">Let’s align, energize, and rise together</div>
+
+    <!-- Highlights -->
+    <div class="highlights">
+      <div class="highlight-card">
+        <p class="highlight-title">Company Overview</p>
+        <p class="highlight-sub">Vision, Mission, and What’s Next</p>
+      </div>
+      <div class="highlight-card">
+        <p class="highlight-title">Zen Rise</p>
+        <p class="highlight-sub">Igniting momentum</p>
+      </div>
+      <div class="highlight-card">
+        <p class="highlight-title">AI</p>
+        <p class="highlight-sub">Copilots, edge, agents — a fast, no‑fluff tour of AI now and next</p>
+      </div>
+    </div>
+
+    <main>
+      <div class="schedule">
+        <div class="slot">
+          <div class="num">01</div>
+          <div class="content">
+            <h3>Company Overview</h3>
+            <p>Vision, Mission, and What’s Next</p>
+          </div>
+          <div class="meta">
+            <div><strong>Orator:</strong> Krishnan</div>
+            <div><strong>Anchor:</strong> Arnab</div>
+            <div><strong>Duration:</strong> 60 min</div>
+            <div><strong>Time:</strong> 03:00 PM – 04:00 PM</div>
+          </div>
+        </div>
+
+        <div class="slot">
+          <div class="num">02</div>
+          <div class="content">
+            <h3>Zen Rise</h3>
+            <p>Setting the tone for growth and excellence</p>
+            <div><span class="label">Panelists:</span>
+              <div class="chip-row">
+                <span class="chip">Manohar</span>
+                <span class="chip">Venki</span>
+                <span class="chip">Hariprasath</span>
+                <span class="chip">Arnab</span>
+                <span class="chip">Gokul J</span>
+                <span class="chip">Krishnan</span>
+              </div>
+            </div>
+          </div>
+          <div class="meta">
+            <div><strong>Moderator:</strong> Ravi</div>
+            <div><strong>Anchor:</strong> Anuradha</div>
+            <div><strong>Duration:</strong> 45 min</div>
+            <div><strong>Time:</strong> 04:00 PM – 04:45 PM</div>
+          </div>
+        </div>
+
+        <div class="slot break">
+          <div class="num">☕</div>
+          <div class="content">
+            <h3>Tea Break</h3>
+            <p>Refresh. Connect. Recharge.</p>
+          </div>
+          <div class="meta">
+            <div><strong>Duration:</strong> 30 min</div>
+            <div><strong>Time:</strong> 04:45 PM – 05:15 PM</div>
+          </div>
+        </div>
+
+        <div class="slot">
+          <div class="num">03</div>
+          <div class="content">
+            <h3>AI</h3>
+            <p>Copilots, edge, agents — a fast, no‑fluff tour of AI now and next</p>
+            <div><span class="label">Panelists:</span>
+              <div class="chip-row">
+                <span class="chip">Manohar</span>
+                <span class="chip">Arnab</span>
+                <span class="chip">Joylon</span>
+                <span class="chip">Uday</span>
+                <span class="chip">Krishnan</span>
+              </div>
+            </div>
+          </div>
+          <div class="meta">
+            <div><strong>Moderator:</strong> Anuradha</div>
+            <div><strong>Anchor:</strong> Deep</div>
+            <div><strong>Duration:</strong> 30 min</div>
+            <div><strong>Time:</strong> 05:15 PM – 05:45 PM</div>
+          </div>
+        </div>
+
+        <div class="slot celebrate">
+          <div class="num">04</div>
+          <div class="content">
+            <h3>Townhall Winner + Conclusion</h3>
+            <p>Recognition followed by closing remarks</p>
+          </div>
+          <div class="meta">
+            <div><strong>Anchor:</strong> Arnab/Anu + Subasree (TH Winners)</div>
+            <div><strong>Duration:</strong> 15 min</div>
+            <div><strong>Time:</strong> 05:45 PM – 06:00 PM</div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="note">All remaining sessions continue on Day 2</div>
+      <div class="legend">
+        <span class="legend-chip">Dress code: Smart casual</span>
+        <span class="legend-chip">Recording enabled</span>
+      </div>
+    </footer>
+  </div>
+</section>
+
+<!-- DAY 2 POSTER -->
+<section class="poster day2">
+  <div class="poster-inner">
+    <header class="header">
+      <div class="brand">
+        <div class="logo">IQ</div>
+        <div class="titles">
+          <h1>All-Hands 2025 — Day 2</h1>
+          <p>Focus: IQ Panel Discussion • Embedded & Zen Huras • Winners & Awards</p>
+        </div>
+      </div>
+      <div class="when-where">
+        <div><strong>Fri, 17 Oct 2025</strong></div>
+        <div>Venue: Zoho Meeting</div>
+      </div>
+    </header>
+
+    <div class="tagline">Build together. Ship together. Celebrate together.</div>
+
+    <!-- Highlights -->
+    <div class="highlights">
+      <div class="highlight-card">
+        <p class="highlight-title">IQ Panel Discussion</p>
+        <p class="highlight-sub">IQ insights • iMM Spotlight • GTron Spotlight</p>
+      </div>
+      <div class="highlight-card">
+        <p class="highlight-title">Embedded & Zen Huras</p>
+        <p class="highlight-sub">Embedded Spotlight • Zen Huras Team</p>
+      </div>
+      <div class="highlight-card">
+        <p class="highlight-title">Winners & Awards</p>
+        <p class="highlight-sub">Townhall Winners • Awards Ceremony</p>
+      </div>
+    </div>
+
+    <main>
+      <div class="schedule">
+
+        <!-- Group 1: IQ Panel Discussion (Part 1) -->
+        <div class="group">
+          <div class="group-header">
+            <h3 class="group-title">IQ Panel Discussion</h3>
+            <p class="group-sub">Morning block</p>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">1</div>
+            <div class="sub-main">
+              <h4>IQ</h4>
+              <p>Bringing inspection execution together</p>
+              <div><span class="label">Panelists:</span>
+                <div class="chip-row">
+                  <span class="chip">Hari Prasath</span>
+                  <span class="chip">Manohar</span>
+                  <span class="chip">Anuradha</span>
+                  <span class="chip">Adersh</span>
+                  <span class="chip">Damodaran</span>
+                  <span class="chip">Manikandan</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Moderator:</strong> Krishnan</div>
+              <div><strong>Anchor:</strong> Harinath</div>
+              <div><strong>Duration:</strong> 60 min</div>
+              <div><strong>Time:</strong> 09:00 AM – 10:00 AM</div>
+            </div>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">2</div>
+            <div class="sub-main">
+              <h4>iMM Team Spotlight</h4>
+              <p>People, progress, and demos</p>
+              <div><span class="label">Presenters:</span>
+                <div class="chip-row">
+                  <span class="chip">Veena</span>
+                  <span class="chip">Amuthan</span>
+                  <span class="chip">Varshini</span>
+                  <span class="chip">Joylon</span>
+                  <span class="chip">Sanket</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Anchor:</strong> Subasree, Aaron</div>
+              <div><strong>Duration:</strong> 72 min</div>
+              <div><strong>Time:</strong> 10:00 AM – 11:12 AM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tea Break -->
+        <div class="slot break">
+          <div class="num">☕</div>
+          <div class="content">
+            <h3>Tea Break</h3>
+            <p>Grab a cup and mingle</p>
+          </div>
+          <div class="meta">
+            <div><strong>Duration:</strong> 18 min</div>
+            <div><strong>Time:</strong> 11:12 AM – 11:30 AM</div>
+          </div>
+        </div>
+
+        <!-- Group 1 (cont.): IQ Panel Discussion -->
+        <div class="group">
+          <div class="group-header">
+            <h3 class="group-title">IQ Panel Discussion (cont.)</h3>
+            <p class="group-sub">Pre-lunch</p>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">3</div>
+            <div class="sub-main">
+              <h4>GTron Team Spotlight</h4>
+              <p>Updates and roadmap</p>
+              <div><span class="label">Presenters:</span>
+                <div class="chip-row">
+                  <span class="chip">Ram</span>
+                  <span class="chip">Subasree</span>
+                  <span class="chip">Nadimuthu</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Anchor:</strong> Harinath</div>
+              <div><strong>Duration:</strong> 36 min</div>
+              <div><strong>Time:</strong> 11:30 AM – 12:06 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Group 2: Embedded & Zen Huras -->
+        <div class="group">
+          <div class="group-header">
+            <h3 class="group-title">Embedded & Zen Huras</h3>
+            <p class="group-sub">Midday block</p>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">1</div>
+            <div class="sub-main">
+              <h4>Embedded Spotlight</h4>
+              <p>Platform stability and diagnostics</p>
+              <div><span class="label">Presenters:</span>
+                <div class="chip-row">
+                  <span class="chip">Raveendran</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Anchor:</strong> Harinath</div>
+              <div><strong>Duration:</strong> 15 min</div>
+              <div><strong>Time:</strong> 12:06 PM – 12:21 PM</div>
+            </div>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">2</div>
+            <div class="sub-main">
+              <h4>Zen Huras Team</h4>
+              <p>System integration and learnings</p>
+              <div><span class="label">Presenters:</span>
+                <div class="chip-row">
+                  <span class="chip">Prabhu</span>
+                  <span class="chip">Gnanendra</span>
+                  <span class="chip">Vinoth</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Anchor:</strong> Harinath</div>
+              <div><strong>Duration:</strong> 36 min</div>
+              <div><strong>Time:</strong> 12:21 PM – 12:57 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Winners + Lunch -->
+        <div class="slot celebrate">
+          <div class="num">🍽️</div>
+          <div class="content">
+            <h3>Townhall Winners + Lunch</h3>
+            <p>Celebrating contributions across teams</p>
+          </div>
+          <div class="meta">
+            <div><strong>Duration:</strong> 48 min</div>
+            <div><strong>Time:</strong> 12:57 PM – 01:45 PM</div>
+          </div>
+        </div>
+
+        <!-- Group 3: Hortisort + Cotton Picker -->
+        <div class="group">
+          <div class="group-header">
+            <h3 class="group-title">Hortisort + Cotton Picker</h3>
+            <p class="group-sub">Afternoon block</p>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">3</div>
+            <div class="sub-main">
+              <h4>Hortisort</h4>
+              <p>Highlights and next milestones</p>
+              <div><span class="label">Panelists:</span>
+                <div class="chip-row">
+                  <span class="chip">Arnab</span>
+                  <span class="chip">RJ</span>
+                  <span class="chip">Damodaran</span>
+                  <span class="chip">Jayant</span>
+                  <span class="chip">Krishnan</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Moderator:</strong> Jagdeesh Sunkad</div>
+              <div><strong>Anchor:</strong> Veena</div>
+              <div><strong>Duration:</strong> 60 min</div>
+              <div><strong>Time:</strong> 01:45 PM – 02:45 PM</div>
+            </div>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">4</div>
+            <div class="sub-main">
+              <h4>Hortisort Team</h4>
+              <p>Deep-dive session</p>
+              <div><span class="label">Presenters:</span>
+                <div class="chip-row">
+                  <span class="chip">Pratim</span>
+                  <span class="chip">Sagar</span>
+                  <span class="chip">Boopathi</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Anchor:</strong> Veena</div>
+              <div><strong>Duration:</strong> 36 min</div>
+              <div><strong>Time:</strong> 02:45 PM – 03:21 PM</div>
+            </div>
+          </div>
+
+          <div class="subslot">
+            <div class="sub-idx">5</div>
+            <div class="sub-main">
+              <h4>Cotton Picker</h4>
+              <p>Field insights and roadmap</p>
+              <div><span class="label">Panelists:</span>
+                <div class="chip-row">
+                  <span class="chip">Uday</span>
+                  <span class="chip">Manohar</span>
+                </div>
+              </div>
+            </div>
+            <div class="sub-meta">
+              <div><strong>Anchor:</strong> Aaron</div>
+              <div><strong>Duration:</strong> 15 min</div>
+              <div><strong>Time:</strong> 03:21 PM – 03:36 PM</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Winners + Tea Break -->
+        <div class="slot break">
+          <div class="num">☕</div>
+          <div class="content">
+            <h3>Townhall Winners + Tea Break</h3>
+            <p>Catch-ups and photos</p>
+          </div>
+          <div class="meta">
+            <div><strong>Duration:</strong> 24 min</div>
+            <div><strong>Time:</strong> 03:36 PM – 04:00 PM</div>
+          </div>
+        </div>
+
+        <!-- Awards -->
+        <div class="slot awards">
+          <div class="num">🏆</div>
+          <div class="content">
+            <h3>Awards Session</h3>
+            <p>Impact, innovation, and team excellence</p>
+          </div>
+          <div class="meta">
+            <div><strong>Anchor:</strong> Arnab</div>
+            <div><strong>Duration:</strong> 100 min</div>
+            <div><strong>Time:</strong> 04:00 PM – 05:40 PM</div>
+          </div>
+        </div>
+
+        <!-- Overall Conclusion -->
+        <div class="slot celebrate">
+          <div class="num">✔</div>
+          <div class="content">
+            <h3>Overall Conclusion</h3>
+            <p>Closing remarks and thanks</p>
+          </div>
+          <div class="meta">
+            <div><strong>Anchor:</strong> Ravi</div>
+            <div><strong>Duration:</strong> 15 min</div>
+            <div><strong>Time:</strong> —</div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="note">Slides owners: please send final decks to Slide Master 24h prior • A/V support on standby</div>
+      <div class="legend">
+        <span class="legend-chip">Q&A open</span>
+        <span class="legend-chip">Recording enabled</span>
+        <span class="legend-chip">Celebrate wins</span>
+      </div>
+    </footer>
+  </div>
+</section>
+  </div>  <script>
+    // Subtle particles animation (screen only; hidden in print)
+    (function() {
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr, particles, rafId;
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        w = canvas.width = Math.floor(window.innerWidth * dpr);
+        h = canvas.height = Math.floor(window.innerHeight * dpr);
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+        initParticles();
+      }
+
+      function initParticles() {
+        const count = Math.max(60, Math.min(120, Math.floor((window.innerWidth * window.innerHeight) / 30000)));
+        particles = [];
+        for (let i = 0; i < count; i++) {
+          particles.push({
+            x: Math.random() * w,
+            y: Math.random() * h,
+            vx: (Math.random() - 0.5) * 0.08 * dpr,
+            vy: (Math.random() - 0.5) * 0.08 * dpr,
+            r: Math.random() * 1.6 * dpr + 0.4 * dpr,
+            a: Math.random() * 0.35 + 0.15
+          });
+        }
+      }
+
+      function step() {
+        ctx.clearRect(0, 0, w, h);
+        // Draw connections
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x;
+            const dy = p.y - q.y;
+            const dist2 = dx*dx + dy*dy;
+            if (dist2 < (120 * dpr) * (120 * dpr)) {
+              const alpha = 0.04 * (1 - dist2 / ((120 * dpr) * (120 * dpr)));
+              ctx.strokeStyle = `rgba(15, 23, 42, ${alpha})`;
+              ctx.lineWidth = 1 * dpr;
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.stroke();
+            }
+          }
+        }
+        // Draw particles
+        for (const p of particles) {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > w) p.vx *= -1;
+          if (p.y < 0 || p.y > h) p.vy *= -1;
+
+          const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 2.4);
+          grad.addColorStop(0, `rgba(99, 102, 241, ${p.a})`);
+          grad.addColorStop(1, `rgba(99, 102, 241, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r * 2.4, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = `rgba(15, 23, 42, ${0.12 + p.a * 0.25})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        rafId = requestAnimationFrame(step);
+      }
+
+      function start() {
+        stop();
+        step();
+      }
+      function stop() {
+        if (rafId) cancelAnimationFrame(rafId);
+      }
+
+      resize();
+      start();
+      window.addEventListener('resize', resize);
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) stop(); else start();
+      });
+    })();
+  </script></body>
 </html>
